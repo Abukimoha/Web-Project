@@ -1,0 +1,74 @@
+﻿@model IEnumerable<LibraryMangement.Models.Transactiontbl>
+
+@{
+    ViewBag.Title = "Requests";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<br />
+<h4>Book list</h4>
+<hr />
+<br />
+
+<link rel="stylesheet" , href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
+<link rel="stylesheet" , href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
+<table width="100%" class="table-sm table-hover table-bordered" id="example">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookISBN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TransactionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookISBN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+                  <div class="btn btn-group-sm">
+                      <div class="btn btn-dark btn-sm iconop">
+                            <i class="fas fa-edit"></i>
+                            @Html.ActionLink("AcceptRequest", "AcceptRequest", null, new { TransactionId = item.TransactionId }, new { @class = "", style = "text-decoration:none; color: White" })
+                      </div>
+                      <div class="btn btn-sm btn-warning">
+                            <i class="fas fa-info-circle iconop"></i>
+                            @Html.ActionLink("RejectRequest", "RejectRequest", null, new { TransactionId = item.TransactionId }, new { @class = "", style = "text-decoration:none; color: white" })
+                       </div>
+                  </div>
+        </tr>
+    }
+</table>
+<br />
+@if (Session["operationMsg"] != null)
+{
+    <script type="text/javascript">
+                @*Popups the alert if the session data is there*@
+                window.onload = function () {
+                    alert("@Session["operationMsg"]");
+                    window.location.href = "/Transactiontbl/OperationAlert";
+                };
+        </script>
+
+    }
+
+

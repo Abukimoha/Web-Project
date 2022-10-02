@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Library_ManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admintbl">
+    <Key>
+      <PropertyRef Name="AdminId" />
+    </Key>
+    <Property Name="AdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdminName" Type="nvarchar" MaxLength="50" />
+    <Property Name="AdminEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AdminPass" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Booktbl">
+    <Key>
+      <PropertyRef Name="BookId" />
+    </Key>
+    <Property Name="BookId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookTitle" Type="nvarchar" MaxLength="50" />
+    <Property Name="BookCategory" Type="nvarchar" MaxLength="50" />
+    <Property Name="BookAuthor" Type="nvarchar" MaxLength="50" />
+    <Property Name="BookCopies" Type="int" />
+    <Property Name="BookPub" Type="nvarchar" MaxLength="50" />
+    <Property Name="BookPubName" Type="nvarchar" MaxLength="50" />
+    <Property Name="BookISBN" Type="nvarchar" MaxLength="50" />
+    <Property Name="Copyright" Type="int" />
+    <Property Name="DateAdded" Type="char" MaxLength="10" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="AdminId" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Transactiontbl">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookId" Type="int" />
+    <Property Name="BookTitle" Type="nvarchar" MaxLength="50" />
+    <Property Name="BookISBN" Type="nvarchar" MaxLength="50" />
+    <Property Name="TranStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="TransactionDate" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Usertbl">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserGender" Type="nchar" MaxLength="10" />
+    <Property Name="UserDep" Type="nchar" MaxLength="10" />
+    <Property Name="UserAdminNo" Type="int" />
+    <Property Name="UserEmail" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserPass" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Booktbl_Admintbl">
+    <End Role="Admintbl" Type="Self.Admintbl" Multiplicity="0..1" />
+    <End Role="Booktbl" Type="Self.Booktbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admintbl">
+        <PropertyRef Name="AdminId" />
+      </Principal>
+      <Dependent Role="Booktbl">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transactiontbl_Booktbl">
+    <End Role="Booktbl" Type="Self.Booktbl" Multiplicity="0..1" />
+    <End Role="Transactiontbl" Type="Self.Transactiontbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booktbl">
+        <PropertyRef Name="BookId" />
+      </Principal>
+      <Dependent Role="Transactiontbl">
+        <PropertyRef Name="BookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transactiontbl_Usertbl">
+    <End Role="Usertbl" Type="Self.Usertbl" Multiplicity="0..1" />
+    <End Role="Transactiontbl" Type="Self.Transactiontbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usertbl">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Transactiontbl">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Library_ManagementModelStoreContainer">
+    <EntitySet Name="Admintbl" EntityType="Self.Admintbl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Booktbl" EntityType="Self.Booktbl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transactiontbl" EntityType="Self.Transactiontbl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usertbl" EntityType="Self.Usertbl" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Booktbl_Admintbl" Association="Self.FK_Booktbl_Admintbl">
+      <End Role="Admintbl" EntitySet="Admintbl" />
+      <End Role="Booktbl" EntitySet="Booktbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transactiontbl_Booktbl" Association="Self.FK_Transactiontbl_Booktbl">
+      <End Role="Booktbl" EntitySet="Booktbl" />
+      <End Role="Transactiontbl" EntitySet="Transactiontbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transactiontbl_Usertbl" Association="Self.FK_Transactiontbl_Usertbl">
+      <End Role="Usertbl" EntitySet="Usertbl" />
+      <End Role="Transactiontbl" EntitySet="Transactiontbl" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

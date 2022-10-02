@@ -1,0 +1,34 @@
+﻿@model LibraryMangement.Models.Feedback
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("Success", "Feedback", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "contact-form", role = "form" }))
+{
+    @Html.ValidationSummary()
+    <fieldset>
+        <div class="form-div-1">
+            <label class="name">
+                @Html.TextBoxFor(m => m.Name, new { @placeholder = "Name *", @type = "text" })
+            </label>
+        </div>
+        <div class="form-div-2">
+            <label class="email">
+                @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email Address *", @type = "email" })
+            </label>
+        </div>
+        <div class="form-div-3">
+            <label class="phone notRequired">
+                @Html.TextBoxFor(m => m.Telephone, new { @placeholder = "Telephone Number", @type = "text" })
+            </label>
+        </div>
+        <div>
+            <label class="message">
+                @Html.TextAreaFor(m => m.Message, new { @placeholder = "Message *" })
+            </label>
+        </div>
+        <div class="button-wrapper">
+            <input type="submit" value="Send" name="submit" class="button"> <input type="reset" value="Reset" name="MFReset" class="button"><span>* Required Fields</span>
+        </div>
+    </fieldset>
+}

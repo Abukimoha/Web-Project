@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - LibraryMs</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/fontawesome-all.css" rel="stylesheet" />
+    <link href="~/Content/lmscustom.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</head>
+<body style="padding:unset">
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+            <span class="icon">
+                <i class="fas fa-book-open"></i>
+            </span>
+            @Html.ActionLink("LibraryMs", "MenuTransaction", "Transaction", new { area = "" }, new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item btn-sm btn-white">
+                        <i class="fas fa-home"></i>
+                        @Html.ActionLink("Home", "UserHome", "Transaction", null, new { @class = "btn btn-primary btn-lg btn-block" })
+                    </li>
+                    <li class="nav-item btn-sm btn-white">
+                        <i class="fas fa-address-card"></i>
+                        @Html.ActionLink("About", "UserAbout", "Transaction", null, new { @class = "btn btn-primary btn-lg btn-block" })
+                    </li>
+                    <li class="nav-item btn-sm btn-white">
+                        <i class="fas fa-id-badge"></i>
+                        @Html.ActionLink("Contact", "UserContact", "Transaction", null, new { @class = "btn btn-primary btn-lg btn-block" })
+                    </li>
+                </ul>
+                <ul class="navbar-nav justify-content-end" style="padding-right:50px">
+                    <li class="" style="padding-left:5px; padding-right:5px">
+                        @Html.ActionLink("Transaction", "MenuTransaction", "Transaction", new { area = "" }, new { @class = "btn btn-primary btn-lg btn-block" })
+                    </li>
+                    <li class="" style="padding-left:5px; padding-right:5px">
+
+                        @Html.ActionLink("Requested", "MenuRequested", "Transaction", null, new { @class = "btn btn-primary btn-lg btn-block" })
+                    </li>
+                    <li style="padding-left: 5px; padding-right: 5px ">
+                        @Html.ActionLink("Received", "MenuReceived", "Transaction", null, new { @class = "btn btn-primary btn-lg btn-block" })
+
+                    </li>
+                    <li class="" style="padding-left:5px; padding-right:10px">
+                        @Html.ActionLink("Rejected", "MenuRejected", "Transaction", null, new { @class = "btn btn-primary btn-lg btn-block" })
+
+                    </li>
+                </ul>
+                <span class="text-black" style="padding-top:1px; padding-right:15px">Welcome back @Session["userName"]!!</span>
+                <ul class="navbar-nav justify-content-end">
+
+                    <li class="nav-item btn btn-sm btn-danger">
+                        <i class="fas fa-sign-out-alt"></i>
+                        @Html.ActionLink("Logout", "Logout", "User", null, new { @class = "btn-red", onclick = "return alert('Logged out successfully');", style = "display:inline" })
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div style="padding-left:20px; padding-right:20px">
+        @RenderBody()
+    </div>
+    <div>
+
+        <footer>
+            <div style="" class="card text-center text-White bg-primary">
+                <div class="card-header">
+                    Thank you for visiting us
+                </div>
+               
+                </div>
+                <p>&copy; @DateTime.Now.Year - LibraryMS</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

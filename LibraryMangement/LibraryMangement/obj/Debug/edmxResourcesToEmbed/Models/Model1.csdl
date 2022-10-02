@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Library_ManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admintbl">
+    <Key>
+      <PropertyRef Name="AdminId" />
+    </Key>
+    <Property Name="AdminId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AdminName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AdminEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AdminPass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Booktbls" Relationship="Self.FK_Booktbl_Admintbl" FromRole="Admintbl" ToRole="Booktbl" />
+  </EntityType>
+  <EntityType Name="Booktbl">
+    <Key>
+      <PropertyRef Name="BookId" />
+    </Key>
+    <Property Name="BookId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BookTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BookCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BookAuthor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BookCopies" Type="Int32" />
+    <Property Name="BookPub" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BookPubName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BookISBN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Copyright" Type="Int32" />
+    <Property Name="DateAdded" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AdminId" Type="Int32" />
+    <NavigationProperty Name="Admintbl" Relationship="Self.FK_Booktbl_Admintbl" FromRole="Booktbl" ToRole="Admintbl" />
+    <NavigationProperty Name="Transactiontbls" Relationship="Self.FK_Transactiontbl_Booktbl" FromRole="Booktbl" ToRole="Transactiontbl" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Transactiontbl">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BookId" Type="Int32" />
+    <Property Name="BookTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BookISBN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TranStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TransactionDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Booktbl" Relationship="Self.FK_Transactiontbl_Booktbl" FromRole="Transactiontbl" ToRole="Booktbl" />
+    <NavigationProperty Name="Usertbl" Relationship="Self.FK_Transactiontbl_Usertbl" FromRole="Transactiontbl" ToRole="Usertbl" />
+  </EntityType>
+  <EntityType Name="Usertbl">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserGender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="UserDep" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="UserAdminNo" Type="Int32" />
+    <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserPass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Transactiontbls" Relationship="Self.FK_Transactiontbl_Usertbl" FromRole="Usertbl" ToRole="Transactiontbl" />
+  </EntityType>
+  <Association Name="FK_Booktbl_Admintbl">
+    <End Role="Admintbl" Type="Self.Admintbl" Multiplicity="0..1" />
+    <End Role="Booktbl" Type="Self.Booktbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admintbl">
+        <PropertyRef Name="AdminId" />
+      </Principal>
+      <Dependent Role="Booktbl">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transactiontbl_Booktbl">
+    <End Role="Booktbl" Type="Self.Booktbl" Multiplicity="0..1" />
+    <End Role="Transactiontbl" Type="Self.Transactiontbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booktbl">
+        <PropertyRef Name="BookId" />
+      </Principal>
+      <Dependent Role="Transactiontbl">
+        <PropertyRef Name="BookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transactiontbl_Usertbl">
+    <End Role="Usertbl" Type="Self.Usertbl" Multiplicity="0..1" />
+    <End Role="Transactiontbl" Type="Self.Transactiontbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usertbl">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Transactiontbl">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Library_ManagementEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admintbls" EntityType="Self.Admintbl" />
+    <EntitySet Name="Booktbls" EntityType="Self.Booktbl" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Transactiontbls" EntityType="Self.Transactiontbl" />
+    <EntitySet Name="Usertbls" EntityType="Self.Usertbl" />
+    <AssociationSet Name="FK_Booktbl_Admintbl" Association="Self.FK_Booktbl_Admintbl">
+      <End Role="Admintbl" EntitySet="Admintbls" />
+      <End Role="Booktbl" EntitySet="Booktbls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transactiontbl_Booktbl" Association="Self.FK_Transactiontbl_Booktbl">
+      <End Role="Booktbl" EntitySet="Booktbls" />
+      <End Role="Transactiontbl" EntitySet="Transactiontbls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transactiontbl_Usertbl" Association="Self.FK_Transactiontbl_Usertbl">
+      <End Role="Usertbl" EntitySet="Usertbls" />
+      <End Role="Transactiontbl" EntitySet="Transactiontbls" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
